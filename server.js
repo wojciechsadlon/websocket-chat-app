@@ -38,8 +38,10 @@ io.on('connection', (socket) => {
     console.log('Oh, socket ' + socket.id + ' has left');
     users.forEach(user => {
       const index = users.indexOf(user);
-      user.id === socket.id && users.splice(index, 1);
-      socket.broadcast.emit('userHasLeft', `${user.name} has left the conversation...`);
+      if(user.id === socket.id){
+        users.splice(index, 1);
+        socket.broadcast.emit('userHasLeft', `${user.name} has left the conversation...`);
+      }
     });
   });
   console.log('I\'ve added a listener on message event \n');
